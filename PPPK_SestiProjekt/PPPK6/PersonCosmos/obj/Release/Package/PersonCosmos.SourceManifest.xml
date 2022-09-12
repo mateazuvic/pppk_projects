@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<sitemanifest>
+  <IisApp path="C:\Users\Teodor\Desktop\ALGEBRA 5\PPPK\PPPK_SestiProjekt\PPPK6\PersonCosmos\obj\Release\Package\PackageTmp" />
+  <setAcl path="C:\Users\Teodor\Desktop\ALGEBRA 5\PPPK\PPPK_SestiProjekt\PPPK6\PersonCosmos\obj\Release\Package\PackageTmp" setAclResourceType="Directory" />
+  <setAcl path="C:\Users\Teodor\Desktop\ALGEBRA 5\PPPK\PPPK_SestiProjekt\PPPK6\PersonCosmos\obj\Release\Package\PackageTmp" setAclUser="anonymousAuthenticationUser" setAclResourceType="Directory" />
+</sitemanifest>

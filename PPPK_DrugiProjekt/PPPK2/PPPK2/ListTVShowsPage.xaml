@@ -1,0 +1,76 @@
+﻿<local:FramedPage x:Class="PPPK2.ListTVShowsPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:PPPK2"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="ListTVShowsPage">
+
+    <Grid Background="{StaticResource Background}" Margin="0,0,0,-39.4">
+        <ListView 
+            Background="{StaticResource BackgroundShiny }"
+            x:Name="LvTVShows"
+            AlternationCount="2"
+            HorizontalAlignment="Left" Height="240" Margin="164,96,0,0" VerticalAlignment="Top" Width="461">
+            <ListView.ItemContainerStyle>
+                <Style TargetType="{x:Type ListViewItem}">
+                    <EventSetter Event="MouseDoubleClick" Handler="BtnEdit_Click"/>
+                    <Setter Property="Background" Value="LightPink"/>
+                    <Style.Triggers>
+                        <Trigger Property="ListView.AlternationIndex" Value="1">
+                            <Setter Property="Background" Value="HotPink"/>
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsSelected" Value="true"/>
+                            </MultiTrigger.Conditions>
+                            <Setter Property="Background" Value="LightBlue"/>
+                        </MultiTrigger>
+                    </Style.Triggers>
+                </Style>
+            </ListView.ItemContainerStyle>
+
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn
+                        Width="185" 
+                        Header="Name"
+                        DisplayMemberBinding="{Binding Name}"/>
+                    <GridViewColumn
+                        Width="70" 
+                        Header="Rating"
+                        DisplayMemberBinding="{Binding Rating}"/>
+                    <GridViewColumn
+                        Width="195" 
+                        Header="TV host"
+                        DisplayMemberBinding="{Binding TVHost}"/>
+                    
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <Button
+            Content="Edit"
+            Name="BtnEdit"
+            Click="BtnEdit_Click"
+            Foreground="WhiteSmoke"
+            Background="CornflowerBlue"
+            HorizontalAlignment="Left" Margin="170,369,0,0" VerticalAlignment="Top" Width="82" Height="33"/>
+        <Button 
+            Content="Delete"
+            Name="BtnDelete"
+            Click="BtnDelete_Click"
+            Foreground="WhiteSmoke"
+            Background="CornflowerBlue" 
+            HorizontalAlignment="Left" Margin="351,369,0,0" VerticalAlignment="Top" Width="82" Height="33"/>
+        <Button 
+            Content="Add"
+            Name="BtnAdd"
+            Click="BtnAdd_Click"
+            Foreground="WhiteSmoke"
+            Background="CornflowerBlue"  
+            HorizontalAlignment="Left" Margin="535,369,0,0" VerticalAlignment="Top" Width="82" Height="33"/>
+
+    </Grid>
+</local:FramedPage>

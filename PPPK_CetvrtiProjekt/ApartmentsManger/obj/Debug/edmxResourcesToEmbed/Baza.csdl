@@ -1,0 +1,73 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="Baza" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+  <EntityContainer Name="BazaContainer" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Apartment" EntityType="Baza.Apartment" />
+    <EntitySet Name="Rooms" EntityType="Baza.Room" />
+    <EntitySet Name="UploadedFiles" EntityType="Baza.UploadedFile" />
+    <AssociationSet Name="ApartmentUploadedFile" Association="Baza.ApartmentUploadedFile">
+      <End Role="Apartment" EntitySet="Apartment" />
+      <End Role="UploadedFile" EntitySet="UploadedFiles" />
+    </AssociationSet>
+    <AssociationSet Name="ApartmentRoom" Association="Baza.ApartmentRoom">
+      <End Role="Apartment" EntitySet="Apartment" />
+      <End Role="Room" EntitySet="Rooms" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Apartment">
+    <Key>
+      <PropertyRef Name="IDApartment" />
+    </Key>
+    <Property Name="IDApartment" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Address" Type="String" Nullable="false" MaxLength="50" />
+    <Property Name="City" Type="String" Nullable="false" MaxLength="20" />
+    <Property Name="Contact" Type="String" Nullable="false" MaxLength="50" />
+    <NavigationProperty Name="UploadedFiles" Relationship="Baza.ApartmentUploadedFile" FromRole="Apartment" ToRole="UploadedFile" />
+    <NavigationProperty Name="Rooms" Relationship="Baza.ApartmentRoom" FromRole="Apartment" ToRole="Room" />
+  </EntityType>
+  <EntityType Name="Room">
+    <Key>
+      <PropertyRef Name="IDRoom" />
+    </Key>
+    <Property Name="IDRoom" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Number" Type="Int32" Nullable="false" />
+    <Property Name="Capacity" Type="Int32" Nullable="false" />
+    <Property Name="ApartmentIDApartment" Type="Int32" Nullable="false" />
+    <Property Name="UploadedFileID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Apartment" Relationship="Baza.ApartmentRoom" FromRole="Room" ToRole="Apartment" />
+  </EntityType>
+  <EntityType Name="UploadedFile">
+    <Key>
+      <PropertyRef Name="IDUploadedFile" />
+    </Key>
+    <Property Name="IDUploadedFile" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="50" />
+    <Property Name="ContentType" Type="String" Nullable="false" MaxLength="50" />
+    <Property Name="Content" Type="Binary" Nullable="false" />
+    <Property Name="ApartmentIDApartment" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Apartment" Relationship="Baza.ApartmentUploadedFile" FromRole="UploadedFile" ToRole="Apartment" />
+  </EntityType>
+  <Association Name="ApartmentUploadedFile">
+    <End Type="Baza.Apartment" Role="Apartment" Multiplicity="1" />
+    <End Type="Baza.UploadedFile" Role="UploadedFile" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Apartment">
+        <PropertyRef Name="IDApartment" />
+      </Principal>
+      <Dependent Role="UploadedFile">
+        <PropertyRef Name="ApartmentIDApartment" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="ApartmentRoom">
+    <End Type="Baza.Apartment" Role="Apartment" Multiplicity="1" />
+    <End Type="Baza.Room" Role="Room" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Apartment">
+        <PropertyRef Name="IDApartment" />
+      </Principal>
+      <Dependent Role="Room">
+        <PropertyRef Name="ApartmentIDApartment" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

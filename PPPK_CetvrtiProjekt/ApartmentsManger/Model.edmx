@@ -1,0 +1,208 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Model.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="ModelStoreContainer">
+    <EntitySet Name="Apartment" EntityType="Model.Store.Apartment" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Rooms" EntityType="Model.Store.Rooms" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="UploadedFiles" EntityType="Model.Store.UploadedFiles" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="ApartmentUploadedFile" Association="Model.Store.ApartmentUploadedFile">
+      <End Role="Apartment" EntitySet="Apartment" />
+      <End Role="UploadedFile" EntitySet="UploadedFiles" />
+    </AssociationSet>
+    <AssociationSet Name="ApartmentRoom" Association="Model.Store.ApartmentRoom">
+      <End Role="Apartment" EntitySet="Apartment" />
+      <End Role="Room" EntitySet="Rooms" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Apartment">
+    <Key>
+      <PropertyRef Name="IDApartment" />
+    </Key>
+    <Property Name="IDApartment" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Address" Type="nvarchar" Nullable="false" MaxLength="50" />
+    <Property Name="City" Type="nvarchar" Nullable="false" MaxLength="20" />
+    <Property Name="Contact" Type="nvarchar" Nullable="false" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Rooms">
+    <Key>
+      <PropertyRef Name="IDRoom" />
+    </Key>
+    <Property Name="IDRoom" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Number" Type="int" Nullable="false" />
+    <Property Name="Capacity" Type="int" Nullable="false" />
+    <Property Name="ApartmentIDApartment" Type="int" Nullable="false" />
+    <Property Name="UploadedFileID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="UploadedFiles">
+    <Key>
+      <PropertyRef Name="IDUploadedFile" />
+    </Key>
+    <Property Name="IDUploadedFile" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="50" />
+    <Property Name="ContentType" Type="nvarchar" Nullable="false" MaxLength="50" />
+    <Property Name="Content" Type="varbinary(max)" Nullable="false" />
+    <Property Name="ApartmentIDApartment" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="ApartmentUploadedFile">
+    <End Role="Apartment" Type="Model.Store.Apartment" Multiplicity="1" />
+    <End Role="UploadedFile" Type="Model.Store.UploadedFiles" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Apartment">
+        <PropertyRef Name="IDApartment" />
+      </Principal>
+      <Dependent Role="UploadedFile">
+        <PropertyRef Name="ApartmentIDApartment" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="ApartmentRoom">
+    <End Role="Apartment" Type="Model.Store.Apartment" Multiplicity="1" />
+    <End Role="Room" Type="Model.Store.Rooms" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Apartment">
+        <PropertyRef Name="IDApartment" />
+      </Principal>
+      <Dependent Role="Room">
+        <PropertyRef Name="ApartmentIDApartment" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="Model" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+        <EntityContainer Name="ModelContainer" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Apartment" EntityType="Model.Apartment" />
+          <EntitySet Name="Rooms" EntityType="Model.Room" />
+          <EntitySet Name="UploadedFiles" EntityType="Model.UploadedFile" />
+          <AssociationSet Name="ApartmentUploadedFile" Association="Model.ApartmentUploadedFile">
+            <End Role="Apartment" EntitySet="Apartment" />
+            <End Role="UploadedFile" EntitySet="UploadedFiles" />
+          </AssociationSet>
+          <AssociationSet Name="ApartmentRoom" Association="Model.ApartmentRoom">
+            <End Role="Apartment" EntitySet="Apartment" />
+            <End Role="Room" EntitySet="Rooms" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Apartment">
+          <Key>
+            <PropertyRef Name="IDApartment" />
+          </Key>
+          <Property Name="IDApartment" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Address" Type="String" Nullable="false" MaxLength="50" />
+          <Property Name="City" Type="String" Nullable="false" MaxLength="20" />
+          <Property Name="Contact" Type="String" Nullable="false" MaxLength="50" />
+          <NavigationProperty Name="UploadedFiles" Relationship="Model.ApartmentUploadedFile" FromRole="Apartment" ToRole="UploadedFile" />
+          <NavigationProperty Name="Rooms" Relationship="Model.ApartmentRoom" FromRole="Apartment" ToRole="Room" />
+        </EntityType>
+        <EntityType Name="Room">
+          <Key>
+            <PropertyRef Name="IDRoom" />
+          </Key>
+          <Property Name="IDRoom" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Number" Type="Int32" Nullable="false" />
+          <Property Name="Capacity" Type="Int32" Nullable="false" />
+          <Property Name="ApartmentIDApartment" Type="Int32" Nullable="false" />
+          <Property Name="UploadedFileID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Apartment" Relationship="Model.ApartmentRoom" FromRole="Room" ToRole="Apartment" />
+        </EntityType>
+        <EntityType Name="UploadedFile">
+          <Key>
+            <PropertyRef Name="IDUploadedFile" />
+          </Key>
+          <Property Name="IDUploadedFile" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" />
+          <Property Name="ContentType" Type="String" Nullable="false" MaxLength="50" />
+          <Property Name="Content" Type="Binary" Nullable="false" />
+          <Property Name="ApartmentIDApartment" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Apartment" Relationship="Model.ApartmentUploadedFile" FromRole="UploadedFile" ToRole="Apartment" />
+        </EntityType>
+        <Association Name="ApartmentUploadedFile">
+          <End Type="Model.Apartment" Role="Apartment" Multiplicity="1" />
+          <End Type="Model.UploadedFile" Role="UploadedFile" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Apartment">
+              <PropertyRef Name="IDApartment" />
+            </Principal>
+            <Dependent Role="UploadedFile">
+              <PropertyRef Name="ApartmentIDApartment" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ApartmentRoom">
+          <End Type="Model.Apartment" Role="Apartment" Multiplicity="1" />
+          <End Type="Model.Room" Role="Room" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Apartment">
+              <PropertyRef Name="IDApartment" />
+            </Principal>
+            <Dependent Role="Room">
+              <PropertyRef Name="ApartmentIDApartment" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="ModelStoreContainer" CdmEntityContainer="ModelContainer">
+    <EntitySetMapping Name="Apartment">
+      <EntityTypeMapping TypeName="IsTypeOf(Model.Apartment)">
+        <MappingFragment StoreEntitySet="Apartment">
+          <ScalarProperty Name="IDApartment" ColumnName="IDApartment" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="City" ColumnName="City" />
+          <ScalarProperty Name="Contact" ColumnName="Contact" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Rooms">
+      <EntityTypeMapping TypeName="IsTypeOf(Model.Room)">
+        <MappingFragment StoreEntitySet="Rooms">
+          <ScalarProperty Name="IDRoom" ColumnName="IDRoom" />
+          <ScalarProperty Name="Number" ColumnName="Number" />
+          <ScalarProperty Name="Capacity" ColumnName="Capacity" />
+          <ScalarProperty Name="ApartmentIDApartment" ColumnName="ApartmentIDApartment" />
+          <ScalarProperty Name="UploadedFileID" ColumnName="UploadedFileID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UploadedFiles">
+      <EntityTypeMapping TypeName="IsTypeOf(Model.UploadedFile)">
+        <MappingFragment StoreEntitySet="UploadedFiles">
+          <ScalarProperty Name="IDUploadedFile" ColumnName="IDUploadedFile" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="ContentType" ColumnName="ContentType" />
+          <ScalarProperty Name="Content" ColumnName="Content" />
+          <ScalarProperty Name="ApartmentIDApartment" ColumnName="ApartmentIDApartment" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <edmx:Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </edmx:Connection>
+    <edmx:Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+        <DesignerProperty Name="UseLegacyProvider" Value="False" />
+      </DesignerInfoPropertySet>
+    </edmx:Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

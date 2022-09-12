@@ -1,0 +1,58 @@
+﻿@model IEnumerable<ApartmentsManger.Room>
+
+@{
+    ViewBag.Title = "Rooms";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.IDRoom)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Number)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Capacity)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ApartmentIDApartment)
+        </th>
+        <th>
+            @Html.DisplayName("Address")
+        </th>
+        
+    </tr>
+
+@foreach (var item in Model) {
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.IDRoom)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Number)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Capacity)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.ApartmentIDApartment)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Apartment.Address), @Html.DisplayFor(modelItem => item.Apartment.City)
+    </td>
+    <td>
+        @Html.ActionLink("Edit", "Edit", new { id = item.IDRoom }, new { @class = "btn btn-primary btn-sm" }) 
+        @Html.ActionLink("Details", "Details", new { id = item.IDRoom }, new { @class = "btn btn-info btn-sm" }) 
+        @Html.ActionLink("Delete", "Delete", new { id = item.IDRoom }, new { @class = "btn btn-danger btn-sm" })
+    </td>
+</tr>
+}
+
+</table>

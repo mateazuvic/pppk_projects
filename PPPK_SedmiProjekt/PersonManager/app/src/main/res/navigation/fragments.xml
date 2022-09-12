@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fragments"
+    app:startDestination="@id/menuPersons">
+
+    <fragment
+        android:id="@+id/menuPersons"
+        android:name="hr.algebra.personmanager.ListFragment"
+        android:label="Memories"
+        tools:layout="@layout/fragment_list" />
+
+    <fragment
+        android:id="@+id/menuPets"
+        android:name="hr.algebra.personmanager.EditFragment"
+        android:label="Edit"
+        tools:layout="@layout/fragment_edit" />
+
+
+
+</navigation>
